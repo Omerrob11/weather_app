@@ -1,15 +1,20 @@
+import { fetchDailyWeather } from "./dailyWeatherApi";
+
 const userInputs = document.querySelector(".user_inputs");
 
 function createCityFormInput() {
   const cityFormContainer = document.createElement("form");
 
   const cityInput = document.createElement("input");
-  cityInput.type = "text";
+  cityInput.type = "search";
   cityInput.placeholder = "London...";
+  cityInput.classList.add("city_input");
 
   const cityFormBtn = document.createElement("button");
   cityFormBtn.textContent = "Search";
   cityFormBtn.type = "submit";
+
+  cityFormBtn.addEventListener("click", getUserCityInput);
 
   cityFormContainer.append(cityInput, cityFormBtn);
 
@@ -27,11 +32,22 @@ function createChangeDegreeBtn() {
   return changeDegreeBtnContainer;
 }
 
+// Form Event Listeners //
+
+function getUserCityInput(event) {
+  // maybe prevent default to not reload the page
+  event.preventDefault();
+  const cityInput = document.querySelector(".city_input");
+  const userCityValue = cityInput.value;
+  fetchDailyWeather(userCityValue);
+
+  //   send the data to the api calls
+}
+
 // why here?
 // becuase, in a module, i can put all the methods and variables
 // related to that model
 function renderUserInputs() {
-  debugger;
   const userInputsForm = createCityFormInput();
   const degreeBtn = createChangeDegreeBtn();
 
