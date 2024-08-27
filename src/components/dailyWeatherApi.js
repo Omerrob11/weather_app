@@ -12,12 +12,14 @@ function fetchDailyWeather(userCityInput) {
       `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${userCityInput}?key=C6U43WQXQNAXHR6Y8YMJAWGDW`,
     )
       .then(function (response) {
+        console.log(response);
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
         return response.json();
       })
       .then(function (response) {
+        console.log(response);
         const data = {
           cityTitle: response.address,
           cityDescription: response.description,
@@ -28,8 +30,11 @@ function fetchDailyWeather(userCityInput) {
         resolve(data);
       })
       .catch(function (error) {
-        // if fetch operation fail
+        // if fetch operation fail / responsee status was 400
         console.log(error + "error inside daily weather app");
+
+        const errorPar = document.querySelector(".error_par");
+        errorPar.classList.remove("hidden");
       });
   });
 }

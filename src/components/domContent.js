@@ -23,7 +23,8 @@ function createDataDisplay() {
 function renderInitialDataDisplay() {
   console.log("is it working");
   const displayContainer = createDataDisplay();
-  contentContainer.append(displayContainer);
+  const errorPar = document.querySelector(".error_par");
+  contentContainer.insertBefore(displayContainer, errorPar);
   const cityTitle = document.querySelector(".city_title");
   // getting the inital data, for the city declared upfront
   fetchDailyWeather(cityTitle.textContent).then(function (data) {
@@ -40,6 +41,9 @@ function editDataDisplay(data) {
 
   const degreeDisplay = document.querySelector(".degree");
   degreeDisplay.textContent = data.temp;
+
+  const errorPar = document.querySelector(".error_par");
+  errorPar.classList.add("hidden");
 }
 
 export { renderInitialDataDisplay, editDataDisplay };
