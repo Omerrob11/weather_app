@@ -19,7 +19,6 @@ function fetchDailyWeather(userCityInput) {
         return response.json();
       })
       .then(function (response) {
-        console.log(response);
         const data = {
           cityTitle: response.address,
           cityDescription: response.description,

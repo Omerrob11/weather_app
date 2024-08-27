@@ -5,8 +5,7 @@ import {} from "./components/dailyWeatherApi";
 import { renderInitialDataDisplay } from "./components/domContent";
 function initialWebsiteLoad() {
   renderUserInputs();
+  renderInitialDataDisplay();
 }
 
 initialWebsiteLoad();
-
-renderInitialDataDisplay();

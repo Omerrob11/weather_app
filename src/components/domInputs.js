@@ -1,5 +1,6 @@
 import { fetchDailyWeather } from "./dailyWeatherApi";
 import { editDataDisplay } from "./domContent";
+import { getGifInputText, getGif } from "./giphyApi";
 const userInputs = document.querySelector(".user_inputs");
 
 function createCityFormInput() {
@@ -35,12 +36,21 @@ function createChangeDegreeBtn() {
 // Form Event Listeners //
 
 function renderUserCityInput(event) {
-  // maybe prevent default to not reload the page
+  // prevent default to not reload the page
   event.preventDefault();
   const cityInput = document.querySelector(".city_input");
   const userCityValue = cityInput.value;
-  fetchDailyWeather(userCityValue).then(function (data) {
+  // fetching the weather data on each form submit
+  fetchDailyWeather(userCityValue).then(async function (data) {
+    // after fetching the data, display and fetch the giff
+
+    // why async? because this function is not instant, we need to fetch the giff
+    // here, we also edit, but also geth the giphy
     editDataDisplay(data);
+    const gitInputText = getGifInputText(data.temp);
+    const gifData = await getGif(gitInputText);
+    const gif = document.querySelector(".gif_image");
+    gif.src = gifData.data.images.original.url;
   });
 
   //   send the data to the api calls
@@ -58,6 +68,3 @@ function renderUserInputs() {
 }
 
 export { renderUserInputs };
-// should a component do one thing?
-// can i create here the renderToPAGE FUNCTION?
-// or not
