@@ -1,3 +1,5 @@
+import { fetchDailyWeather } from "./dailyWeatherApi";
+
 const contentContainer = document.querySelector(".content_container");
 
 function createDataDisplay() {
@@ -19,8 +21,14 @@ function createDataDisplay() {
 }
 
 function renderInitialDataDisplay() {
+  console.log("is it working");
   const displayContainer = createDataDisplay();
   contentContainer.append(displayContainer);
+  const cityTitle = document.querySelector(".city_title");
+  // getting the inital data, for the city declared upfront
+  fetchDailyWeather(cityTitle.textContent).then(function (data) {
+    editDataDisplay(data);
+  });
 }
 
 function editDataDisplay(data) {

@@ -1,5 +1,5 @@
 import { fetchDailyWeather } from "./dailyWeatherApi";
-
+import { editDataDisplay } from "./domContent";
 const userInputs = document.querySelector(".user_inputs");
 
 function createCityFormInput() {
@@ -14,7 +14,7 @@ function createCityFormInput() {
   cityFormBtn.textContent = "Search";
   cityFormBtn.type = "submit";
 
-  cityFormBtn.addEventListener("click", getUserCityInput);
+  cityFormBtn.addEventListener("click", renderUserCityInput);
 
   cityFormContainer.append(cityInput, cityFormBtn);
 
@@ -34,12 +34,14 @@ function createChangeDegreeBtn() {
 
 // Form Event Listeners //
 
-function getUserCityInput(event) {
+function renderUserCityInput(event) {
   // maybe prevent default to not reload the page
   event.preventDefault();
   const cityInput = document.querySelector(".city_input");
   const userCityValue = cityInput.value;
-  fetchDailyWeather(userCityValue);
+  fetchDailyWeather(userCityValue).then(function (data) {
+    editDataDisplay(data);
+  });
 
   //   send the data to the api calls
 }
