@@ -2,6 +2,7 @@ import { fetchDailyWeather } from "./dailyWeatherApi";
 import { getGif, getGifInputText } from "./giphyApi";
 
 const contentContainer = document.querySelector(".content_container");
+const errorImage = "error.jpeg";
 
 function createDataDisplay() {
   const dataDisplayContainer = document.createElement("div");
@@ -50,13 +51,28 @@ function renderInitialDataDisplay() {
     // after fetching the data, we can fetch the giff
 
     // edit data display before fetching the giff to not block the stack
-    editDataDisplay(data);
-
-    const gitInputText = getGifInputText(data.temp);
-    const gifData = await getGif(gitInputText);
-
-    const gif = document.querySelector(".gif_image");
-    gif.src = gifData.data.images.original.url;
+    try {
+      editDataDisplay(data);
+      const gitInputText = getGifInputText(data.temp);
+      const gifData = await getGif(gitInputText);
+      // if we will have an error with the gif fetching, it will go to the catch code
+      // the promise will considred rejected
+      const gif = document.querySelector(".gif_image");
+      // no error in the responseGif.ok, it just that we don't have value
+      // so we check, if not, we bring the default one
+      if (
+        gifData.data &&
+        gifData.data.images &&
+        gifData.data.images.original.url
+      ) {
+        gif.src = gifData.data.images.original.url;
+      } else {
+        gif.src = errorImage;
+      }
+    } catch (error) {
+      alert(error);
+      alert("error, no image found");
+    }
   });
 }
 

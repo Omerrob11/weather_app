@@ -46,14 +46,24 @@ function renderUserCityInput(event) {
 
     // why async? because this function is not instant, we need to fetch the giff
     // here, we also edit, but also geth the giphy
-    editDataDisplay(data);
-    const gitInputText = getGifInputText(data.temp);
-    const gifData = await getGif(gitInputText);
-    const gif = document.querySelector(".gif_image");
-    gif.src = gifData.data.images.original.url;
+    try {
+      editDataDisplay(data);
+      const gitInputText = getGifInputText(data.temp);
+      const gifData = await getGif(gitInputText);
+      const gif = document.querySelector(".gif_image");
+      if (
+        gifData.data &&
+        gifData.data.images &&
+        gifData.data.images.original.url
+      ) {
+        gif.src = gifData.data.images.original.url;
+      } else {
+        gif.src = errorImage;
+      }
+    } catch (error) {
+      alert(error);
+    }
   });
-
-  //   send the data to the api calls
 }
 
 // why here?
@@ -62,8 +72,6 @@ function renderUserCityInput(event) {
 function renderUserInputs() {
   const userInputsForm = createCityFormInput();
   const degreeBtn = createChangeDegreeBtn();
-
-  console.log();
   userInputs.append(userInputsForm, degreeBtn);
 }
 
