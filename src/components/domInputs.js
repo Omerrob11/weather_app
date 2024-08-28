@@ -29,6 +29,7 @@ function createChangeDegreeBtn() {
   changeDegreeBtn.textContent = "°C \\  °F ";
 
   changeDegreeBtnContainer.appendChild(changeDegreeBtn);
+  changeDegreeBtn.addEventListener("click", handleDegreeConversionBtn);
 
   return changeDegreeBtnContainer;
 }
@@ -75,4 +76,25 @@ function renderUserInputs() {
   userInputs.append(userInputsForm, degreeBtn);
 }
 
+// event listener should happen only after we fetch the data
+// so we can attach the event handler only after we fetch the data
+// or what we did here - we attached the event handler at first, but changes stuff only if the text content is not nothing
+function handleDegreeConversionBtn() {
+  const degreePar = document.querySelector(".degree");
+  // checking if we currently have it
+  if (degreePar && degreePar.textContent != "") {
+    debugger;
+    if (degreePar.className == "degree fahr") {
+      degreePar.className = "degree cels";
+      const fahrDeg = +degreePar.textContent;
+      const celsiusDeg = (fahrDeg - 30) / 2;
+      degreePar.textContent = celsiusDeg;
+    } else {
+      degreePar.className = "degree fahr";
+      const celsiusDeg = +degreePar.textContent;
+      const faherDeg = celsiusDeg * 2 + 30;
+      degreePar.textContent = faherDeg;
+    }
+  }
+}
 export { renderUserInputs };

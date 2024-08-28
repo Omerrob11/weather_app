@@ -16,7 +16,7 @@ function createDataDisplay() {
   cityDescription.classList.add("city_description");
 
   const degreeDisplay = document.createElement("p");
-  degreeDisplay.classList.add("degree");
+  degreeDisplay.classList.add("degree", "fahr");
 
   dataDisplayContainer.append(cityTitle, cityDescription, degreeDisplay);
   return dataDisplayContainer;
